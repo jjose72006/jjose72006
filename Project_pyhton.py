@@ -1,10 +1,14 @@
 ## Programmer : Jose, Jason
+## Programmer : Sellers, Zach
 ## Course :     B104
+## Final Project
+
 
 import os
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 
 path = r"C:\Users\JJose\OneDrive\Desktop\Desktop\B104\B104_YRBS_Project.xlsx"
@@ -28,25 +32,30 @@ def male_female():
 
 print(male_female())
 
-def age(): 
+def age(data): 
    df = pd.DataFrame(data, columns=['q1'])
     
-   age = df['q1'].value_count()
-   value = ['12 years old or younger', '13 years old','14 years old','15 years old','16 years old','17 years old','18 years old']
-   size = [age.get(1,0), age.get(2,0)]
+   age_counts = df['q1'].value_counts()
+   value = ['12 years old or younger', '13 years old', '14 years old', '15 years old', '16 years old', '17 years old', '18 years old']
     
-   plt.figure(figsize=(7,7))
-   plt.pie(size, autopct='%1.1f%%', startangle = 90, color=['Blue', 'Green','Red','Pink','Purple','Yellow','Orange'])    
+   size = [age_counts.get(i, 0) for i in range(1, 8)]
+    
+   plt.figure(figsize=(7, 7))
+   plt.pie(size, labels=value, autopct='%1.1f%%', startangle=90, 
+           colors=['Blue', 'Green', 'Red', 'Pink', 'Purple', 'Yellow', 'Orange'])
+    
    plt.title('Age of The People')
-   plt.axis('Equal')
+   plt.axis('equal')
    plt.show()
-   
+print(age(data)) 
    
 try:
-    import seaborn as sns
     print('Seaborn Imported Successfully')
 except ImportError as e:
     print(f'Error importing seabron:{e}')
+
+
+
 
 
 
