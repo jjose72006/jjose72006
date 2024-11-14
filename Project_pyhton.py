@@ -54,6 +54,22 @@ try:
 except ImportError as e:
     print(f'Error importing seabron:{e}')
 
+data = pd.read_csv('demographics_data.csv')
+
+# Preprocess the data
+# Count the occurrences of each demographic combination
+heatmap_data = data.groupby(['Age', 'Sex', 'Grade', 'Hispanic_Latino', 'Race']).size().unstack(fill_value=0)
+
+# Plot the heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='d')
+plt.title('Demographics Heatmap')
+plt.xlabel('Demographics Categories')
+plt.ylabel('Frequency')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
 
 
 
