@@ -5,6 +5,7 @@ import os
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 
 path = r"C:\Users\JJose\OneDrive\Desktop\Desktop\B104\B104_YRBS_Project.xlsx"
@@ -42,12 +43,22 @@ def age():
    plt.show()
    
    
-try:
-    import seaborn as sns
-    print('Seaborn Imported Successfully')
-except ImportError as e:
-    print(f'Error importing seabron:{e}')
 
+data = pd.read_excel(path)
+
+# Preprocess the data
+# Count the occurrences of each demographic combination
+heatmap_data = data.groupby(['Age', 'Sex', 'Grade', 'Hispanic_Latino', 'Race']).size().unstack(fill_value=0)
+
+# Plot the heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='d')
+plt.title('Demographics Heatmap')
+plt.xlabel('Demographics Categories')
+plt.ylabel('Frequency')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
 
 
 
