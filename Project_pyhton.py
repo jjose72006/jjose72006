@@ -1,8 +1,6 @@
 ## Programmer : Jose, Jason
 ## Programmer : Sellers, Zach
 ## Course :     B104
-## Final Project
-
 
 import os
 from matplotlib import pyplot as plt
@@ -12,6 +10,7 @@ import seaborn as sns
 
 
 path = r"C:\Users\JJose\OneDrive\Desktop\Desktop\B104\B104_YRBS_Project.xlsx"
+
 
 data= pd.read_excel(path)
 
@@ -49,26 +48,16 @@ def age(data):
    plt.show()
 print(age(data)) 
    
-try:
-    print('Seaborn Imported Successfully')
-except ImportError as e:
-    print(f'Error importing seabron:{e}')
+numeric_data = data.select_dtypes(include=['number'])
 
-data = pd.read_csv('demographics_data.csv')
-
-# Preprocess the data
-# Count the occurrences of each demographic combination
-heatmap_data = data.groupby(['Age', 'Sex', 'Grade', 'Hispanic_Latino', 'Race']).size().unstack(fill_value=0)
-
-# Plot the heatmap
-plt.figure(figsize=(12, 8))
-sns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='d')
-plt.title('Demographics Heatmap')
-plt.xlabel('Demographics Categories')
-plt.ylabel('Frequency')
-plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.figure(figsize=(10, 8))
+sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Heat Map of Correlation')
 plt.show()
+
+
+
+
 
 
 
