@@ -1,4 +1,5 @@
 ## Programmer : Jose, Jason
+## Programmer : Sellers, Zach
 ## Course :     B104
 
 import os
@@ -9,6 +10,7 @@ import seaborn as sns
 
 
 path = r"C:\Users\JJose\OneDrive\Desktop\Desktop\B104\B104_YRBS_Project.xlsx"
+
 
 data= pd.read_excel(path)
 
@@ -29,36 +31,37 @@ def male_female():
 
 print(male_female())
 
-def age(): 
+def age(data): 
    df = pd.DataFrame(data, columns=['q1'])
     
-   age = df['q1'].value_count()
-   value = ['12 years old or younger', '13 years old','14 years old','15 years old','16 years old','17 years old','18 years old']
-   size = [age.get(1,0), age.get(2,0)]
+   age_counts = df['q1'].value_counts()
+   value = ['12 years old or younger', '13 years old', '14 years old', '15 years old', '16 years old', '17 years old', '18 years old']
     
-   plt.figure(figsize=(7,7))
-   plt.pie(size, autopct='%1.1f%%', startangle = 90, color=['Blue', 'Green','Red','Pink','Purple','Yellow','Orange'])    
+   size = [age_counts.get(i, 0) for i in range(1, 8)]
+    
+   plt.figure(figsize=(7, 7))
+   plt.pie(size, labels=value, autopct='%1.1f%%', startangle=90, 
+           colors=['Blue', 'Green', 'Red', 'Pink', 'Purple', 'Yellow', 'Orange'])
+    
    plt.title('Age of The People')
-   plt.axis('Equal')
+   plt.axis('equal')
    plt.show()
+print(age(data)) 
    
-   
+numeric_data = data.select_dtypes(include=['number'])
 
-data = pd.read_excel(path)
-
-# Preprocess the data
-# Count the occurrences of each demographic combination
-heatmap_data = data.groupby(['Age', 'Sex', 'Grade', 'Hispanic_Latino', 'Race']).size().unstack(fill_value=0)
-
-# Plot the heatmap
-plt.figure(figsize=(12, 8))
-sns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='d')
-plt.title('Demographics Heatmap')
-plt.xlabel('Demographics Categories')
-plt.ylabel('Frequency')
-plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+plt.figure(figsize=(10, 8))
+sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Heat Map of Correlation')
 plt.show()
+
+
+
+
+
+
+
+
 
 
 
